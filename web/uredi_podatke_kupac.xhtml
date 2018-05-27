@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KUPAC</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Bubnjevi" url="bubnjevi_kupac.xhtml" />
+            <p:menuitem value="Gitare" url="gitare_kupac.xhtml" />
+            <p:menuitem value="Klavijature" url="klavijature_kupac.xhtml" />
+            <p:menuitem value="Ostalo" url="ostalo_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPLJENI ARTIKLI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_kupac.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="MOJ PROFIL" icon="ui-icon-person">
+            <p:menuitem value="Uredi podatke" url="uredi_podatke_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+         
+        <p>
+            <p:growl id="msgs" showDetail="true" sticky="true" life="3000"/> 
+            <h:form id="formDataTable">
+
+                <p:dataTable id="basicDT" var="idKupac" value="#{kupacUrediBean.kupac}">
+                    <f:facet name="header">
+                        Kupac Info
+                    </f:facet>
+                    <p:column headerText="Ime" width="200">
+                        <h:outputText value="#{idKupac.ime}" />
+                    </p:column>
+                    <p:column headerText="Prezime" width="200">
+                        <h:outputText value="#{idKupac.prezime}" />
+                    </p:column>
+                    <p:column headerText="Username" width="200">
+                        <h:outputText value="#{idKupac.username}" />
+                    </p:column>
+                    <p:column headerText="Password" width="200">
+                        <h:outputText value="#{idKupac.password}" />
+                    </p:column>
+                    <p:column headerText="Email" width="200">
+                        <h:outputText value="#{idKupac.email}" />
+                    </p:column>
+
+                    <p:column style="width:20%; text-align: center" headerText="Obrada">
+                        <p:commandButton update=":formUpdate" oncomplete="PF('DialogKupacUredjivanje').show()" icon="ui-icon-pencil" title="Uredi">
+                            <f:setPropertyActionListener value="#{idKupac}" target="#{kupacUrediBean.selectedKupac}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+
+            <h:form id="formUpdate">
+                <p:dialog header="Uređivanje Podataka" widgetVar="DialogKupacUredjivanje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgKupacUredjivanje">
+
+                    <h:panelGrid columns="2" cellpadding="5" rendered="#{not empty kupacUrediBean.selectedKupac}" columnClasses="label,value">
+
+                        <h:outputLabel value="ID:" />
+                        <h:outputText id="id" value="#{kupacUrediBean.selectedKupac.idKupac}" />
+                        
+                        <h:outputLabel value="Ime:" />
+                        <p:inputText id="ime" value="#{kupacUrediBean.selectedKupac.ime}" required="true" label="ime" />
+
+                        <h:outputLabel value="Prezime:" />
+                        <p:inputText id="prezime" value="#{kupacUrediBean.selectedKupac.prezime}" required="true" label="prezime" />
+
+                        <h:outputLabel  value="Username:" />
+                        <p:inputText id="username" value="#{kupacUrediBean.selectedKupac.username}" required="true" label="username" />
+
+                        <h:outputLabel  value="Password:" />
+                        <p:inputText id="password" value="#{kupacUrediBean.selectedKupac.password}" required="true" label="password" />
+
+                        <h:outputLabel  value="Email:" />
+                        <p:inputText id="email" value="#{kupacUrediBean.selectedKupac.email}" required="true" label="email" />
+
+                        <h:outputLabel  value="Adresa:" />
+                        <p:inputText id="adresa" value="#{kupacUrediBean.selectedKupac.adresa}" required="true" label="adresa" />
+                        
+                        <h:outputLabel  value="Br Telefona:" />
+                        <p:inputText id="brTelefona" value="#{kupacUrediBean.selectedKupac.brTelefona}" required="true" label="brTelefona" />
+                        
+                        <h:outputLabel  value="Br Kupljenih Artikala:" />
+                        <h:outputText id="brKupljenihArtikala" value="#{kupacUrediBean.selectedKupac.brKupljenihArtikala}" />
+
+                        <f:facet name="footer">
+                            <p:commandButton id="urediButton" value="Spremi" oncomplete="PF('DialogKupacUredjivanje').hide()" icon="fa fa-save" update=":formDataTable, :msgs" action="#{kupacUrediBean.UpdateKupac(actionEvent)}" />
+                        </f:facet>  
+
+                    </h:panelGrid>
+                </p:dialog>
+
+            </h:form>
+        </p>
+        
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+        
+    </h:body>
+</html>
+

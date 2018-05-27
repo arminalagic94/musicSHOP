@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <h:head>
+        <title>PRODAVAČ</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Lista artikala" url="lista_artikala_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPCI" icon="ui-icon-person">
+            <p:menuitem value="Lista svih kupaca" url="lista_kupaca_admin.xhtml"/>
+            <p:menuitem value="Lista redovnih kupaca" url="lista_redovnih_admin.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="RAČUNI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+        <p>
+            <p:growl id="msgs" showDetail="true" />
+            <h:form id="formDataTable">
+
+                <p:dataTable id="basicDT" var="racuni" value="#{AdminRacuniBean.racuni}">
+                    <f:facet name="header">
+                        Lista računa
+                    </f:facet>
+                    <p:column headerText="Id" width="50">
+                        <h:outputText value="#{racuni.idRacun}" />
+                    </p:column>
+                    <p:column headerText="Naziv" width="400">
+                        <h:outputText value="#{racuni.idKupac}" />
+                    </p:column>
+                    <p:column headerText="Redovna cijena" width="400">
+                        <h:outputText value="#{racuni.idProdavac}" />
+                    </p:column>
+                    <p:column headerText="Popust cijena" width="400">
+                        <h:outputText value="#{racuni.idArtikal}" />
+                    </p:column>
+                    <p:column headerText="Br komada" width="400">
+                        <h:outputText value="#{racuni.datum}" />
+                    </p:column>
+                    
+                    <p:column style="width:50;text-align: center" headerText="Detalji">
+                        <p:commandButton update=":formUpdate" oncomplete="PF('DialogRacuni').show()" icon="ui-icon-search" title="Detalji">
+                            <f:setPropertyActionListener value="#{racuni}" target="#{AdminRacuniBean.selectedRacuni}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                
+            </h:form>
+            
+            <h:form id="formUpdate">
+                <p:dialog header="Detalji Racuni" widgetVar="DialogRacuni" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgRacuni">
+                    <p:outputPanel id="racuniDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty AdminRacuniBean.selectedRacuni}" columnClasses="label,value">
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.idRacun}" />
+
+                            <h:outputText value="Kupac:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.idKupac}" />
+
+                            <h:outputText value="Prodavac:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.idProdavac}" />
+
+                            <h:outputText value="Artikal:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.idArtikal}" />
+                            
+                            <h:outputText value="Br Komada:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.brKomada}" />
+                            
+                            <h:outputText value="Cijena:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.ukupnaCijena}" />
+
+                            <h:outputText value="Datum:" />
+                            <h:outputText value="#{AdminRacuniBean.selectedRacuni.datum}" />
+                            
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+            
+        </p>
+
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+    </h:body>
+</html>

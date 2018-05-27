@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <h:head>
+        <title>PRODAVAČ</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Lista artikala" url="lista_artikala_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPCI" icon="ui-icon-person">
+            <p:menuitem value="Lista svih kupaca" url="lista_kupaca_admin.xhtml"/>
+            <p:menuitem value="Lista redovnih kupaca" url="lista_redovnih_admin.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="RAČUNI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+        <p>
+            <p:growl id="msgs" sticky="true" showDetail="true" life="3000"/> 
+            <h:form>
+                <p:commandButton id="btnCreateArtikal" update=":formCreate" value="Dodaj" oncomplete="PF('DialogArtikliDodavanje').show()" icon="ui-icon-pencil" title="Dodaj" />
+            </h:form>
+            <h:form id="formDataTable">
+
+                <p:dataTable id="basicDT" var="naziv" value="#{AdminArtikliBean.artikli}">
+                    <f:facet name="header">
+                        Lista artikala
+                    </f:facet>
+                    <p:column headerText="Id" width="50">
+                        <h:outputText value="#{naziv.idArtikal}" />
+                    </p:column>
+                    <p:column headerText="Naziv" width="200">
+                        <h:outputText value="#{naziv.naziv}" />
+                    </p:column>
+                    <p:column headerText="Redovna cijena" width="200">
+                        <h:outputText value="#{naziv.redovnaCijena}" />
+                    </p:column>
+                    <p:column headerText="Popust cijena" width="200">
+                        <h:outputText value="#{naziv.popustCijena}" />
+                    </p:column>
+                    <p:column headerText="Br komada" width="200">
+                        <h:outputText value="#{naziv.brKomada}" />
+                    </p:column>
+                    
+                    <p:column style="width:20%; text-align: center" headerText="Obrada">
+                        <p:commandButton id="btnUpdateArtikal" update=":formUpdate" oncomplete="PF('DialogArtikliUredjivanje').show()" icon="ui-icon-pencil" title="Uredi">
+                            <f:setPropertyActionListener value="#{naziv}" target="#{AdminArtikliBean.selectedArtikli}" />
+                        </p:commandButton>
+                        
+                        <p:commandButton id="btnDelete" update=":formDelete:novostiDelete"  oncomplete="PF('DialogArtikliBrisanje').show()" icon="ui-icon-trash" title="Izbriši">
+                        <f:setPropertyActionListener value="#{naziv}" target="#{AdminArtikliBean.selectedArtikli}" />
+                    </p:commandButton>
+                        
+                       
+                    </p:column>
+                </p:dataTable>
+                
+            </h:form>
+            
+
+            <h:form id="formCreate">
+                <p:dialog header="Dodavanje Artikla" widgetVar="DialogArtikliDodavanje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgArtikliDodavanje">
+
+                        <h:panelGrid columns="2"   cellpadding="5">
+                            <h:outputLabel value="Naziv:" />
+                            <p:inputText id="naziv" value="#{AdminArtikliBean.noviArtikal.naziv}" required="true" label="naziv" />
+
+                            <h:outputLabel value="Tip:" />
+                            <p:inputText id="tip" value="#{AdminArtikliBean.noviArtikal.tip}" required="true" label="tip" />
+
+                            <h:outputLabel value="Opis:" />
+                            <p:inputText id="opis" value="#{AdminArtikliBean.noviArtikal.opis}" required="true" label="opis" />
+
+                            <h:outputLabel  value="Redovna cijena:" />
+                            <p:inputText id="redovnaCijena" value="#{AdminArtikliBean.noviArtikal.redovnaCijena}" required="true" label="redovnaCijena" />
+
+                            <h:outputLabel  value="Popust cijena:" />
+                            <p:inputText id="password" value="#{AdminArtikliBean.noviArtikal.popustCijena}" required="true" label="popustCijena" />
+
+                            <h:outputLabel  value="Slika (url):" />
+                            <p:inputText id="slika" value="#{AdminArtikliBean.noviArtikal.slika}" required="true" label="slika" />
+
+                            <h:outputLabel  value="Br komada:" />
+                            <p:inputText id="brKomada" value="#{AdminArtikliBean.noviArtikal.brKomada}" required="true" label="brKomada" />
+
+                            <f:facet name="footer">
+                                <p:commandButton id="noviButton" value="Spremi" oncomplete="PF('DialogArtikliDodavanje').hide()" icon="fa fa-save" update=":formDataTable, :msgs" action="#{AdminArtikliBean.btnCreateArtikli(actionEvent)}" />
+                            </f:facet>  
+
+                    </h:panelGrid>
+                </p:dialog>
+
+            </h:form>
+            
+            
+            
+               <h:form id="formUpdate">
+                <p:dialog header="Dodavanje Artikla" widgetVar="DialogArtikliUredjivanje" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgArtikliUredjivanje">
+
+                        <h:panelGrid columns="2" cellpadding="5" rendered="#{not empty AdminArtikliBean.selectedArtikli}" columnClasses="label,value">
+                            
+                            <h:outputLabel value="Tip:" />
+                            <p:inputText id="tip" value="#{AdminArtikliBean.selectedArtikli.tip}" required="true" label="tip" />
+
+                            <h:outputLabel value="Opis:" />
+                            <p:inputText id="opis" value="#{AdminArtikliBean.selectedArtikli.opis}" required="true" label="opis" />
+
+                            <h:outputLabel  value="Redovna cijena:" />
+                            <p:inputText id="redovnaCijena" value="#{AdminArtikliBean.selectedArtikli.redovnaCijena}" required="true" label="redovnaCijena" />
+
+                            <h:outputLabel  value="Popust cijena:" />
+                            <p:inputText id="password" value="#{AdminArtikliBean.selectedArtikli.popustCijena}" required="true" label="popustCijena" />
+
+                            <h:outputLabel  value="Slika (url):" />
+                            <p:inputText id="slika" value="#{AdminArtikliBean.selectedArtikli.slika}" required="true" label="slika" />
+
+                            <h:outputLabel  value="Br komada:" />
+                            <p:inputText id="brKomada" value="#{AdminArtikliBean.selectedArtikli.brKomada}" required="true" label="brKomada" />
+
+                            <f:facet name="footer">
+                                <p:commandButton id="noviButton" value="Spremi" oncomplete="PF('DialogArtikliUredjivanje').hide()" icon="fa fa-save" update=":formDataTable, :msgs" action="#{AdminArtikliBean.btnUpdateArtikli(actionEvent)}" />
+                            </f:facet>  
+
+                    </h:panelGrid>
+                </p:dialog>
+
+            </h:form>
+            
+
+            
+            
+            
+                    <h:form id="formDelete">
+            
+            <p:outputPanel id="novostiDelete" style="text-align:left;">
+                <p:confirmDialog id="confirmDialog" message="Izbrisati novost?" header="Izbrisati?" 
+                                 severity="alert" widgetVar="DialogArtikliBrisanje" showEffect="explode" hideEffect="explode" >
+
+                    <h:inputHidden value="#{AdminArtikliBean.selectedArtikli.naziv}"/>
+                    <p:commandButton id="confirm" value="Da" update=":formDataTable, :msgs" oncomplete="DialogArtikliBrisanje.hide()" 
+                                     actionListener="#{AdminArtikliBean.btnDeleteArtikli(actionEvent)}" icon="fa fa-check-circle"/>
+                   
+                    <p:commandButton id="decline" value="Ne" onclick="DialogArtikliBrisanje.hide" icon="fa fa-times-circle"/>
+              
+                </p:confirmDialog>
+            </p:outputPanel>
+        </h:form>
+            
+        </p>
+
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+    </h:body>
+</html>

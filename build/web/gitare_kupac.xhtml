@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KUPAC</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Bubnjevi" url="bubnjevi_kupac.xhtml" />
+            <p:menuitem value="Gitare" url="gitare_kupac.xhtml" />
+            <p:menuitem value="Klavijature" url="klavijature_kupac.xhtml" />
+            <p:menuitem value="Ostalo" url="ostalo_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPLJENI ARTIKLI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_kupac.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="MOJ PROFIL" icon="ui-icon-person">
+            <p:menuitem value="Uredi podatke" url="uredi_podatke_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        <p>
+            <p:growl id="msgs" showDetail="true" sticky="true" life="3000"/> 
+            <h:form id="form">
+                <p:repeat value="#{kupacGitareBean.gitare}" var="gitare">
+                    <h:panelGrid columns="2" style="width:50%" columnClasses="logo,detail">
+                        <p:commandLink update=":formUpdate" oncomplete="PF('DialogGitare').show()">
+                            <f:setPropertyActionListener value="#{gitare}" target="#{kupacGitareBean.selectedGitare}" />
+                            <p:graphicImage value="#{gitare.slika}" width="400px" height="auto"/>
+                        </p:commandLink>
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Naziv:" />
+                                <h:outputText value="#{gitare.naziv}" style="font-weight: bold"/>
+
+                                <h:outputText value="Cijena:" />
+                                <h:outputText value="#{gitare.redovnaCijena}" style="font-weight: bold"/>
+                                
+
+                                <h:outputText value="Br komada:" />
+                                <h:outputText value="#{gitare.brKomada}" style="font-weight: bold"/>
+                                
+
+                                
+                                
+                                <p:commandButton id="btnRez" actionListener="#{kupacKupiBean.setArtikal(gitare)}" update=":formKupi"  oncomplete="PF('DialogKupi').show()" icon="ui-icon-cart" title="Kupi">
+                    </p:commandButton>
+                                
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                    <hr />
+                </p:repeat>
+                
+                </h:form>
+            
+            <h:form id="formUpdate">
+                <p:dialog header="Artikal Info" widgetVar="DialogGitare" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+                    <p:outputPanel id="GitareDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty kupacGitareBean.selectedGitare}" columnClasses="label,value">
+                            <f:facet name="header">   
+                                <p:graphicImage value="#{kupacGitareBean.selectedGitare.slika}" width="600px" height="auto" />
+                            </f:facet>
+
+                            <h:outputText value="Naziv:" />
+                            <h:outputText value="#{kupacGitareBean.selectedGitare.naziv}" />
+
+                            <h:outputText value="Opis" />
+                            <h:outputText value="#{kupacGitareBean.selectedGitare.opis}" />
+
+                            <h:outputText value="Cijena:" />
+                            <h:outputText value="#{kupacGitareBean.selectedGitare.redovnaCijena}" />
+                            
+                            <h:outputText value="Popust cijena:" />
+                            <h:outputText value="#{kupacGitareBean.selectedGitare.popustCijena}" />
+
+                            <h:outputText value="Br komada" />
+                            <h:outputText value="#{kupacGitareBean.selectedGitare.brKomada}" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formKupi">
+                <p:dialog header="Kupi Artikal" widgetVar="DialogKupi" showEffect="fade" hideEffect="fade" id="dlgKupi">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <f:facet name="footer">
+                            <p:commandButton id="daButton" value="Da" oncomplete="PF('DialogKupi').hide()" update=":form, :msgs" action="#{kupacKupiBean.btnCreateRacun(loginBean.username)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton id="neButton" value="Ne" onclick="PF('DialogKupi').hide()" styleClass="ui-confirmdialog-no" icon="ui-icon-close" /> 
+                        </f:facet>  
+
+                    </h:panelGrid>
+                </p:dialog>                
+            </h:form>
+        </p>
+        
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+        
+    </h:body>
+</html>
+

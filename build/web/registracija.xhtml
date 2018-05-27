@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>REGISTRACIJA</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+        <p:button outcome="index.xhtml" icon="fa fa-home"/>
+        <p:button outcome="prijava.xhtml" value="PRIJAVA" icon="fa fa-user"/>
+        <p:button outcome="registracija.xhtml" value="REGISTRACIJA" icon="fa fa-user-plus"/>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+</p>
+        
+    <p>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+        <h:form id="formReg">
+ 
+                <p:panel id="pnl" header="Registracija" style="margin-bottom:10px;">
+ 
+                            <h:panelGrid columns="2" cellpadding="5">
+                                 <h:outputLabel for="ime" value="Ime:" />
+                                 <p:inputText id="ime" value="#{kupacBean.noviKupac.ime}" required="true" label="ime" />
+ 
+                                 <h:outputLabel for="prezime" value="Prezime:" />
+                                 <p:inputText id="prezime" value="#{kupacBean.noviKupac.prezime}" required="true" label="prezime" />
+                                 
+                                 <h:outputLabel for="username" value="Username:" />
+                                 <p:inputText id="username" value="#{kupacBean.noviKupac.username}" required="true" label="username" />
+
+                                 <h:outputLabel for="password" value="Password:" />
+                                 <p:inputText id="password" value="#{kupacBean.noviKupac.password}" required="true" label="password" />
+
+                                 <h:outputLabel for="email" value="Email:" />
+                                 <p:inputText id="email" value="#{kupacBean.noviKupac.email}" required="true" label="email" />
+
+                                 <h:outputLabel for="adresa" value="Adresa:" />
+                                 <p:inputText id="adresa" value="#{kupacBean.noviKupac.adresa}" required="true" label="adresa" />
+
+                                 <h:outputLabel for="brTelefona" value="Br Telefona:" />
+                                 <p:inputText id="brTelefona" value="#{kupacBean.noviKupac.brTelefona}" required="true" label="brTelefona" />
+ 
+                                 <f:facet name="footer">
+                                     <p:commandButton id="regButton" value="Spremi" icon="fa fa-user" update=":growl" action="#{kupacBean.btnCreateKupac(actionEvent)}" />
+                                </f:facet>  
+                            </h:panelGrid>
+       
+                </p:panel>
+            
+        </h:form>
+    </p>
+
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+        
+    </h:body>
+</html>

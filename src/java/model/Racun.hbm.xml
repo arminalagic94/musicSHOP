@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 8, 2017 10:52:00 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Racun" table="racun" catalog="muzicka_prodavnica" optimistic-lock="version">
+        <id name="idRacun" type="java.lang.Integer">
+            <column name="id_racun" />
+            <generator class="identity" />
+        </id>
+        <property name="idKupac" type="int">
+            <column name="id_kupac" not-null="true" />
+        </property>
+        <property name="idProdavac" type="int">
+            <column name="id_prodavac" not-null="true" />
+        </property>
+        <property name="idArtikal" type="int">
+            <column name="id_artikal" not-null="true" />
+        </property>
+        <property name="brKomada" type="int">
+            <column name="br_komada" not-null="true" />
+        </property>
+        <property name="ukupnaCijena" type="string">
+            <column name="ukupna_cijena" not-null="true" />
+        </property>
+        <property name="datum" type="date">
+            <column name="datum" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

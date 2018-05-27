@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KUPAC</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Bubnjevi" url="bubnjevi_kupac.xhtml" />
+            <p:menuitem value="Gitare" url="gitare_kupac.xhtml" />
+            <p:menuitem value="Klavijature" url="klavijature_kupac.xhtml" />
+            <p:menuitem value="Ostalo" url="ostalo_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPLJENI ARTIKLI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_kupac.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="MOJ PROFIL" icon="ui-icon-person">
+            <p:menuitem value="Uredi podatke" url="uredi_podatke_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+        <p>
+          <p:growl id="msgs" showDetail="true" sticky="true" life="3000"/> 
+            <h:form id="formDataTable">
+
+                <p:dataTable id="basicDT" var="idRacun" value="#{kupacRacuniBean.racun}">
+                    <f:facet name="header">
+                        Lista računa
+                    </f:facet>
+                    <p:column headerText="Id" width="50">
+                        <h:outputText value="#{idRacun.idRacun}" />
+                    </p:column>
+                    <p:column headerText="Kupac" width="200">
+                        <h:outputText value="#{idRacun.idKupac}" />
+                    </p:column>
+                    <p:column headerText="Prodavac" width="200">
+                        <h:outputText value="#{idRacun.idProdavac}" />
+                    </p:column>
+                    <p:column headerText="Artikal" width="200">
+                        <h:outputText value="#{idRacun.idArtikal}" />
+                    </p:column>
+                    <p:column headerText="Br komada" width="200">
+                        <h:outputText value="#{idRacun.brKomada}" />
+                    </p:column>
+                    <p:column headerText="Cijena" width="200">
+                        <h:outputText value="#{idRacun.ukupnaCijena}" />
+                    </p:column>
+                    <p:column headerText="Datum" width="200">
+                        <h:outputText value="#{idRacun.datum}" />
+                    </p:column>
+
+                    <p:column style="width:20%; text-align: center" headerText="Obrada">
+                        <p:commandButton update=":formDelete" oncomplete="PF('DialogRacunBrisanje').show()" icon="ui-icon-trash" title="Izbriši">
+                            <f:setPropertyActionListener value="#{idRacun}" target="#{kupacRacuniBean.selectedRacun}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+
+            <h:form id="formDelete">
+                <p:dialog header="Brisanje Računa" widgetVar="DialogRacunBrisanje" showEffect="fade" hideEffect="fade" id="dlgRacunBrisanje">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                            <f:facet name="footer">
+                                <p:commandButton id="daButton" value="Da" oncomplete="PF('DialogRacunBrisanje').hide()" update=":formDataTable,:msgs" action="#{kupacRacuniBean.btnDeleteRacun(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton id="neButton" value="Ne" onclick="PF('DialogRacunBrisanje').hide()" styleClass="ui-confirmdialog-no" icon="ui-icon-close" /> 
+                            </f:facet>  
+
+                    </h:panelGrid>
+                </p:dialog>                
+            </h:form>
+
+        </p>
+        
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+        
+    </h:body>
+</html>

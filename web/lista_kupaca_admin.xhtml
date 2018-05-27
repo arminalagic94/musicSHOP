@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    <h:head>
+        <title>PRODAVAČ</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Lista artikala" url="lista_artikala_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPCI" icon="ui-icon-person">
+            <p:menuitem value="Lista svih kupaca" url="lista_kupaca_admin.xhtml"/>
+            <p:menuitem value="Lista redovnih kupaca" url="lista_redovnih_admin.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="RAČUNI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_admin.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+        <p>
+            <p:growl id="msgs" showDetail="true" />
+            <h:form id="formDataTable">
+
+                <p:dataTable id="basicDT" var="kupci" value="#{AdminKupciBean.kupci}">
+                    <f:facet name="header">
+                        Lista kupaca
+                    </f:facet>
+                    <p:column headerText="Id" width="50">
+                        <h:outputText value="#{kupci.idKupac}" />
+                    </p:column>
+                    <p:column headerText="Ime" width="400">
+                        <h:outputText value="#{kupci.ime}" />
+                    </p:column>
+                    <p:column headerText="Prezime" width="400">
+                        <h:outputText value="#{kupci.prezime}" />
+                    </p:column>
+                    <p:column headerText="Br kupljenih artikala" width="400">
+                        <h:outputText value="#{kupci.brKupljenihArtikala}" />
+                    </p:column>
+                    
+                    <p:column style="width:50;text-align: center" headerText="Detalji">
+                        <p:commandButton update=":formUpdate" oncomplete="PF('DialogKupci').show()" icon="ui-icon-search" title="Detalji">
+                            <f:setPropertyActionListener value="#{kupci}" target="#{AdminKupciBean.selectedKupci}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                
+            </h:form>
+            
+            <h:form id="formUpdate">
+                <p:dialog header="Kupac Detalji" widgetVar="DialogKupci" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgKupci">
+                    <p:outputPanel id="kupciDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty AdminKupciBean.selectedKupci}" columnClasses="label,value">
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.idKupac}" />
+
+                            <h:outputText value="Ime:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.ime}" />
+
+                            <h:outputText value="Prezime:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.prezime}" />
+
+                            <h:outputText value="E-mail:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.email}" />
+                            
+                            <h:outputText value="Adresa:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.adresa}" />
+                            
+                            <h:outputText value="Br telefona:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.brTelefona}" />
+                            
+                            <h:outputText value="Br kupljenih artikala:" />
+                            <h:outputText value="#{AdminKupciBean.selectedKupci.brKupljenihArtikala}" />
+                            
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
+            
+        </p>
+
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+    </h:body>
+</html>

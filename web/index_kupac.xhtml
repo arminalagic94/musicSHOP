@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>KUPAC</title>
+    </h:head>
+    <h:body>
+    
+<p width="100%">
+<p:toolbar>
+    <f:facet name="left">
+        <a href="https://youtube.com"><p:button icon="fa fa-youtube"/></a>
+        <a href="https://facebook.com"> <p:button icon="fa fa-facebook"/></a>
+        <a href="https://instagram.com"><p:button icon="fa fa-instagram"/></a>
+        <a href="https://outlook.live.com"><p:button icon="fa fa-envelope"/></a>
+    </f:facet>
+    <f:facet name="right">
+    <h:form>
+        <p:commandButton action="#{loginBean.odjava()}" oncomplete="handleLoginRequest(xhr,status,args)" value="Odjava" icon="fa fa-user"/>
+    </h:form>
+    </f:facet>
+</p:toolbar>
+    
+<img src="https://static1.squarespace.com/static/51f55fece4b083675be325d2/t/563e5cb0e4b010b0efcc44a4/1446927540136/Music+banner.jpg?format=1500w" alt="BANNER" height="300px" width="100%"/>  
+
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="ARTIKLI" icon="ui-icon-cart">
+            <p:menuitem value="Bubnjevi" url="bubnjevi_kupac.xhtml" />
+            <p:menuitem value="Gitare" url="gitare_kupac.xhtml" />
+            <p:menuitem value="Klavijature" url="klavijature_kupac.xhtml" />
+            <p:menuitem value="Ostalo" url="ostalo_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="KUPLJENI ARTIKLI" icon="ui-icon-document">
+            <p:menuitem value="Lista računa" url="lista_racuna_kupac.xhtml"/>
+            <p:separator />
+        </p:submenu>
+ 
+        <p:submenu label="MOJ PROFIL" icon="ui-icon-person">
+            <p:menuitem value="Uredi podatke" url="uredi_podatke_kupac.xhtml" />
+            <p:separator />
+        </p:submenu>
+ 
+    </p:menubar>
+</h:form>
+
+</p>
+        
+        <h1 align="center" face="Comic Sans MS,cursive,sans-serif">D O B R O D O Š L I</h1>
+        
+        <hr></hr>
+    <p align="center">
+        Designed by Armin Alagic 739 &copy; 2017
+    </p>
+        <hr></hr>
+
+        
+    </h:body>
+</html>
+
